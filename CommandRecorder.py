@@ -1,4 +1,95 @@
-﻿#==============================================================
+﻿import bpy #Blender内部のデータ構造にアクセスするために必要
+import os
+import bpy.utils.previews
+
+def CustomIcons(Name_File , Name_Icon) :
+    custom_icons = bpy.utils.previews.new()
+    AddonDirector = os.path.dirname(os.path.abspath(__file__))#アドオン管理システムの絶対パスを取得
+    icons_dir = os.path.normpath(os.path.join(AddonDirector, '../CommandRecorder/Icons/'+Name_File))
+    custom_icons.load(Name_Icon, icons_dir , 'IMAGE')
+    return custom_icons[Name_Icon].icon_id
+
+
+
+#==============================================================
+#スタートアップ
+#-------------------------------------------------------------------------------------------
+import bpy #Blender内部のデータ構造にアクセスするために必要
+
+#from . import CommandRecorder as CommandRecorder
+#from . import DefineCommon as Common
+#Common=DefineCommon
+
+#==============================================================
+# プラグインに関する情報
+#==============================================================
+bl_info = {
+"name" : "CommandRecorder",# プラグイン名
+"description" : "Thank you for using our services",# プラグインの説明
+"author" : "BuuGraphic & jamad",# 作者
+"version": (2, 0, 2),# プラグインのバージョン
+"blender": (2, 80, 1),# プラグインが動作するBlenderのバージョン
+"location" : "View 3D",# Blender内部でのプラグインの位置づけ
+"category" : "System"# プラグインのカテゴリ名
+}
+
+
+
+
+#==============================================================
+#レイアウト
+#-------------------------------------------------------------------------------------------
+# メニュー
+class Muthird_UI(bpy.types.Panel):
+    bl_space_type = 'VIEW_3D'# メニューを表示するエリア
+    bl_region_type = 'TOOLS'# メニューを表示するリージョン
+    bl_category = "CommandRecorder"# メニュータブのヘッダー名
+    bl_label = "Information"# タイトル
+    #-------------------------------------------------------------------------------------------
+    #bl_context = "objectmode"# パネルを表示するコンテキスト
+    Header_Icon = CustomIcons("BuuLogo32.png" , "BUULOGO")
+    def draw_header(self, context):
+        self.layout.label(text = "", icon_value = self.Header_Icon)
+    #メニューの描画処理
+    def draw(self, context):
+        self.layout.label(text="") #文字列表示するだけ
+
+
+
+#==============================================================
+# blenderへ登録
+#==============================================================
+Class_List = [
+]
+#Class_List.insert(0,Muthird_UI)
+#Class_List += CommandRecorder.Class_List
+
+def register():
+    for Temp in Class_List:
+        bpy.utils.register_class(Temp)
+    
+    #CommandRecorder.Initialize_Props()
+    Initialize_Props()
+    
+    print("Register")
+
+def unregister():
+    for Temp in Class_List:
+        bpy.utils.unregister_class(Temp)
+    
+    #CommandRecorder.Clear_Props()
+    Clear_Props()
+    
+    print("UnRegister")
+
+
+
+if __name__ == "__main__":
+    register()
+
+
+
+#==============================================================
 #スタートアップ
 #-------------------------------------------------------------------------------------------
 import bpy #Blender内部のデータ構造にアクセスするために必要
@@ -23,7 +114,7 @@ PropertyGroup
 )
 
 
-from . import DefineCommon as Common
+#from . import DefineCommon as Common
 
 
 #==============================================================
