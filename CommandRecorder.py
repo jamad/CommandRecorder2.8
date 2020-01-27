@@ -2,6 +2,9 @@
 import os
 import bpy.utils.previews
 
+StorageFile_Path=r"E:\\MyTools\\Python\\practicePython\\CommandRecorder2.8\\Storage\\CommandRecorder_Storage.txt"
+
+
 def CustomIcons(Name_File , Name_Icon) :
     custom_icons = bpy.utils.previews.new()
     AddonDirector = os.path.dirname(os.path.abspath(__file__))#アドオン管理システムの絶対パスを取得
@@ -379,15 +382,11 @@ class CR_OT_Command(Operator):
 
 
 
-def StrageFile() :
-    Name_File = "CommandRecorder_Storage.txt"
-    AddonDirector = os.path.dirname(os.path.abspath(__file__))#アドオン管理システムの絶対パスを取得
-    File_Path = os.path.normpath(os.path.join(AddonDirector, '../CommandRecorder/Storage/' + Name_File))
-    return File_Path
+
 
 def Save():
     scene = bpy.context.scene
-    File = open(StrageFile() , "w")#書き込みモードでファイルを開く
+    File = open(StorageFile_Path , "w")#書き込みモードでファイルを開く
     Names = scene.CR_Var.Instance_Name
     Commands = scene.CR_Var.Instance_Command
     for Num_Loop in range(len(Names)):
@@ -400,7 +399,7 @@ def Save():
 
 def Load():
     scene = bpy.context.scene
-    File = open(StrageFile() , 'r')#読み込みモードでファイルを開く
+    File = open(StorageFile_Path , 'r')#読み込みモードでファイルを開く
     List = []
     for Line in File:
         List.append(Line.replace('\n',''))
