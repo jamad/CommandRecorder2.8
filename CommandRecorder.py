@@ -380,9 +380,13 @@ class CR_OT_Command(Operator):
 
 
 def StrageFile() :
+    '''
     Name_File = "CommandRecorder_Storage.txt"
     AddonDirector = os.path.dirname(os.path.abspath(__file__))#アドオン管理システムの絶対パスを取得
     File_Path = os.path.normpath(os.path.join(AddonDirector, '../CommandRecorder/Storage/' + Name_File))
+    '''
+    # changed the filepath for my own usage 
+    File_Path=r"E:\\MyTools\\Python\\practicePython\\CommandRecorder2.8\\Storage\\CommandRecorder_Storage.txt"
     return File_Path
 
 def Save():
